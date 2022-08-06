@@ -21,7 +21,7 @@
     </div>
     <div id="layout-main">
         <div id="header">
-            <div style="float: right;margin: 17px 15px 4px 0px;">
+            <div id="login" style="float: right;margin: 17px 15px 4px 0px; display: none">
                 <div title="退出" class="iconfont" onclick="chat.logout()" style="height: 26px;width: 26px;color: #EDF7FF;font-size: 26px;line-height: 26px;cursor: pointer;"></div>
             </div>
             <div class="search-bar-wraper" style="width: 432px; text-align: center"><span class="chat-window-name"></span></div>

@@ -29,9 +29,6 @@ class ChatTask extends Task
         switch( $data['task'] ){
             case 'open':
                 $pushMsg = ChatService::open( $data );
-                if (is_array($pushMsg)){
-                    var_dump($pushMsg);
-                }
                 $swoole->push( $data['fd'] , json_encode($pushMsg) );
                 return 'Finished';
             case 'nologin':

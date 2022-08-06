@@ -30,7 +30,7 @@ class WebSocketService implements WebSocketHandlerInterface
         );
 
         $task = new ChatTask(json_encode($data));
-        $ret = Task::deliver($task);
+        Task::deliver($task);
         echo $request->fd."open\n";
     }
 

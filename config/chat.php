@@ -6,7 +6,7 @@
  * Time: 16:58
  */
 
-define("DOMAIN", env('APP_URL', '0.0.0.0'));
+define("DOMAIN", sprintf("%S:%S", env('APP_URL', '127.0.0.1'), '9090'));
 
 /*房间配置*/
 return [
@@ -16,7 +16,7 @@ return [
         'c' => 'go交流组',
 
     ],
-    'domain' => sprintf("%S:%S", DOMAIN, '9090'),
+    'domain' => DOMAIN,
 
     'emotion' => array(
         "[微笑]" => '<img title="微笑" src="' . DOMAIN . '/images/face/0_1.gif">',
