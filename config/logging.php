@@ -1,7 +1,15 @@
 <?php
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\SyslogUdpHandler;
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) vinhson <15227736751@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+use Monolog\Handler\{StreamHandler, SyslogUdpHandler};
 
 return [
 
@@ -61,7 +69,7 @@ return [
         ],
 
         'papertrail' => [
-            'driver'  => 'monolog',
+            'driver' => 'monolog',
             'level' => 'debug',
             'handler' => SyslogUdpHandler::class,
             'handler_with' => [

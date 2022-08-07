@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: seven
- * Date: 2018/11/17
- * Time: 16:58
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) vinhson <15227736751@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 define("DOMAIN", 'http://127.0.0.1:10000');
@@ -18,7 +21,7 @@ return [
     ],
     'domain' => DOMAIN,
 
-    'emotion' => array(
+    'emotion' => [
         "[微笑]" => '<img title="微笑" src="' . DOMAIN . '/images/face/0_1.gif">',
         "[尴尬]" => '<img title="尴尬" src="' . DOMAIN . '/images/face/10_10.gif">',
         "[发怒]" => '<img title="发怒" src="' . DOMAIN . '/images/face/11_11.gif">',
@@ -80,5 +83,5 @@ return [
         "[闭嘴]" => '<img title="闭嘴" src="' . DOMAIN . '/images/face/7_8.gif">',
         "[握手]" => '<img title="握手" src="' . DOMAIN . '/images/face/81_81.gif">',
         "[大哭]" => '<img title="大哭" src="' . DOMAIN . '/images/face/9_9.gif">',
-    )
+    ]
 ];

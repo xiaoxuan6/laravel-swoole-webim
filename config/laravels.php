@@ -1,8 +1,14 @@
 <?php
-/**
- * @see https://github.com/hhxsv5/laravel-s/blob/master/Settings-CN.md  Chinese
- * @see https://github.com/hhxsv5/laravel-s/blob/master/Settings.md  English
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) vinhson <15227736751@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
+
 return [
     'listen_ip' => env('LARAVELS_LISTEN_IP', '127.0.0.1'),
     'listen_port' => env('LARAVELS_LISTEN_PORT', 9090),
@@ -84,7 +90,7 @@ return [
         'dispatch_mode' => 2,
         'reactor_num' => env('LARAVELS_REACTOR_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 4),
         'worker_num' => env('LARAVELS_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
-        'task_worker_num'    => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
+        'task_worker_num' => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
         'task_ipc_mode' => 1,
         'task_max_request' => env('LARAVELS_TASK_MAX_REQUEST', 8000),
         'task_tmpdir' => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
