@@ -25,19 +25,18 @@ class ChatTask extends Task
 
     public function handle()
     {
-        $swoole = app('swoole');
         $pushMsg = ['code' => 0, 'msg' => '', 'data' => []];
         $data = json_decode($this->data, true);
 
         switch ($data['task']) {
             case 'open':
                 $pushMsg = ChatService::open($data);
-                $swoole->push($data['fd'], json_encode($pushMsg));
+                app('swoole')->push($data['fd'], json_encode($pushMsg));
 
                 return 'Finished';
             case 'nologin':
                 $pushMsg = ChatService::noLogin($data);
-                $swoole->push($data['fd'], json_encode($pushMsg));
+                app('swoole')->push($data['fd'], json_encode($pushMsg));
 
                 return "Finished";
             case 'login':
@@ -60,13 +59,13 @@ class ChatTask extends Task
                 $pushMsg = ChatService::sendSecretMsg($data);
                 //对方在线才可以私聊信息
                 if ($pushMsg) {
-                    $this->sendMsgBySecret($swoole, $pushMsg, $data['send_fd']);
+                    $this->sendMsgBySecret(app('swoole'), $pushMsg, $data['send_fd']);
                 }
 
                 return "Finished";
         }
         if ($pushMsg) {
-            $this->sendMsg($swoole, $pushMsg, $data['fd']);
+            $this->sendMsg(app('swoole'), $pushMsg, $data['fd']);
         }
 
         return "Finished";
@@ -99,7 +98,7 @@ class ChatTask extends Task
     //只广播给同个房间的人
     private function sendMsgOnlyRoom($swoole, $pushMsg, $myfd)
     {
-        $userArr = app('swoole')->ws_roomsTable->get($pushMsg['data']['roomid']);
+        $userArr = $swoole->ws_roomsTable->get($pushMsg['data']['roomid']);
         if ($userArr) {
             $userArr = json_decode($userArr['users'], true);
             echo "当前房间共有 " . count($userArr) . " 个连接\n";
@@ -118,7 +117,7 @@ class ChatTask extends Task
     private function sendMsgBySecret($swoole, $pushMsg, $myfd)
     {
         //判断用户是否在线
-        $user = app('swoole')->ws_usersTable->get('user' . $pushMsg['data']['receive_fd']);
+        $user = $swoole->ws_usersTable->get('user' . $pushMsg['data']['receive_fd']);
         if ($user) {
             //发送给发送方
             if ($myfd == $pushMsg['data']['send_fd']) {

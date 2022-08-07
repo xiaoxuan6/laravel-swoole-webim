@@ -44,4 +44,55 @@ class WebSocket
 
         Task::deliver(new ChatTask(json_encode($params)));
     }
+
+    public function new($frame)
+    {
+        $data = json_decode($frame->data, true);
+        $params = [
+            'task' => 'new',
+            'params' => [
+                'name' => $data['name'],
+                'avatar' => $data['avatar']
+            ],
+            'c' => $data['c'],
+            'message' => $data['message'],
+            'fd' => $frame->fd,
+            'roomid' => $data['roomid']
+        ];
+        Task::deliver(new ChatTask(json_encode($params)));
+    }
+
+    public function change($frame)
+    {
+        $data = json_decode($frame->data, true);
+        $params = [
+            'task' => 'change',
+            'params' => [
+                'name' => $data['name'],
+                'avatar' => $data['avatar'],
+                'email' => $data['email'],
+            ],
+            'fd' => $frame->fd,
+            'oldroomid' => $data['oldroomid'],
+            'roomid' => $data['roomid']
+        ];
+        Task::deliver(new ChatTask(json_encode($params)));
+    }
+
+    public function secretnew($frame)
+    {
+        $data = json_decode($frame->data, true);
+        $params = [
+            'task' => 'secretnew',
+            'params' => [
+                'name' => $data['send_name'],
+                'avatar' => $data['send_avatar']
+            ],
+            'c' => $data['c'],
+            'message' => $data['message'],
+            'send_fd' => $frame->fd,
+            'receive_fd' => $data['receive_fd']
+        ];
+        Task::deliver(new ChatTask(json_encode($params)));
+    }
 }

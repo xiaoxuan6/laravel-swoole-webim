@@ -13,7 +13,7 @@ namespace App\Services;
 
 class ChatService
 {
-    public static function noLogin($data)
+    public static function noLogin($data): array
     {
         $pushMsg['code'] = 5;
         $pushMsg['msg'] = "系统不会存储您的Email，只是为了证明你是一个地球人";
@@ -27,7 +27,7 @@ class ChatService
     }
 
     //打开连接
-    public static function open($data)
+    public static function open($data): array
     {
         //返回4代表初始化房间以及获取在线用户
         $pushMsg['code'] = 4;
@@ -41,7 +41,7 @@ class ChatService
     }
 
     //获取房间
-    public static function getRooms()
+    public static function getRooms(): array
     {
         $rooms = config('chat.rooms');
         $roomss = [];
@@ -67,7 +67,7 @@ class ChatService
     }
 
     //登陆
-    public static function doLogin($data)
+    public static function doLogin($data): array
     {
         $domain = config('chat.domain');
         $pushMsg['code'] = 1;
@@ -112,7 +112,7 @@ class ChatService
     }
 
     //登出
-    public static function doLogout($data)
+    public static function doLogout($data): array
     {
         echo "退出################";
         var_dump($data);
@@ -193,7 +193,7 @@ class ChatService
     }
 
     //发送消息
-    public static function sendNewMsg($data)
+    public static function sendNewMsg($data): array
     {
         $pushMsg['code'] = 2;
         $pushMsg['msg'] = "";
@@ -262,7 +262,7 @@ class ChatService
     }
 
     //匹配文本
-    public static function remind($roomid, $msg)
+    public static function remind($roomid, $msg): array
     {
         $data = [];
         if ($msg != "") {
@@ -290,7 +290,6 @@ class ChatService
                     }
                 }
                 unset($users, $m1,$m2,$m3);
-
             }
         }
 

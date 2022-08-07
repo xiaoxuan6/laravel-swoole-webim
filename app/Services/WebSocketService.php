@@ -46,54 +46,18 @@ class WebSocketService implements WebSocketHandlerInterface
 
                 break;
             case 2: //新消息
-                $data = [
-                    'task' => 'new',
-                    'params' => [
-                        'name' => $data['name'],
-                        'avatar' => $data['avatar']
-                    ],
-                    'c' => $data['c'],
-                    'message' => $data['message'],
-                    'fd' => $frame->fd,
-                    'roomid' => $data['roomid']
-                ];
-                $task = new ChatTask(json_encode($data));
-                $ret = Task::deliver($task);
+                $this->websocket->new($frame);
                 echo $frame->fd . "发了消息\n";
 
                 break;
 
             case 3: // 改变房间
-                $data = [
-                    'task' => 'change',
-                    'params' => [
-                        'name' => $data['name'],
-                        'avatar' => $data['avatar'],
-                        'email' => $data['email'],
-                    ],
-                    'fd' => $frame->fd,
-                    'oldroomid' => $data['oldroomid'],
-                    'roomid' => $data['roomid']
-                ];
-                $task = new ChatTask(json_encode($data));
-                $ret = Task::deliver($task);
+                $this->websocket->change($frame);
                 echo $frame->fd . "改变房间\n";
 
                 break;
             case 4: //私聊信息消息
-                $data = [
-                    'task' => 'secretnew',
-                    'params' => [
-                        'name' => $data['send_name'],
-                        'avatar' => $data['send_avatar']
-                    ],
-                    'c' => $data['c'],
-                    'message' => $data['message'],
-                    'send_fd' => $frame->fd,
-                    'receive_fd' => $data['receive_fd']
-                ];
-                $task = new ChatTask(json_encode($data));
-                $ret = Task::deliver($task);
+                $this->websocket->secretnew($frame);
                 echo $frame->fd . "向" . $data['receive_fd'] . "发起了私聊\n";
 
                 break;
@@ -117,7 +81,7 @@ class WebSocketService implements WebSocketHandlerInterface
                 'fd' => $fd
             ];
             $task = new ChatTask(json_encode($data));
-            $ret = Task::deliver($task);
+            Task::deliver($task);
         }
 
         echo "client {$fd} closed\n";
