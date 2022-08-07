@@ -12,10 +12,8 @@
 namespace App\Services;
 
 use swoole_http_request;
-use App\ChatTask\ChatTask;
 use swoole_websocket_frame;
 use swoole_websocket_server;
-use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface;
 
 /**
@@ -69,21 +67,7 @@ class WebSocketService implements WebSocketHandlerInterface
     //登出,记得laravels.php中的dispatch_mode要设置为2
     public function onClose(swoole_websocket_server $server, $fd, $reactorId)
     {
-        //获取登出的用户
-        $user = app('swoole')->ws_usersTable->get('user' . $fd);
-        if ($user) {
-            $data = [
-                'task' => 'logout',
-                'params' => [
-                    'name' => $user['name'],
-                    'roomid' => $user['roomid']
-                ],
-                'fd' => $fd
-            ];
-            $task = new ChatTask(json_encode($data));
-            Task::deliver($task);
-        }
-
+        $this->websocket->logout($fd);
         echo "client {$fd} closed\n";
     }
 }

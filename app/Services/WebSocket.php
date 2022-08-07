@@ -11,7 +11,7 @@
 
 namespace App\Services;
 
-use App\ChatTask\ChatTask;
+use App\Task\ChatTask;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
 
 class WebSocket
@@ -94,5 +94,22 @@ class WebSocket
             'receive_fd' => $data['receive_fd']
         ];
         Task::deliver(new ChatTask(json_encode($params)));
+    }
+
+    public function logout($fd)
+    {
+        $user = app('swoole')->ws_usersTable->get('user' . $fd);
+        if ($user) {
+            $data = [
+                'task' => 'logout',
+                'params' => [
+                    'name' => $user['name'],
+                    'roomid' => $user['roomid']
+                ],
+                'fd' => $fd
+            ];
+            $task = new ChatTask(json_encode($data));
+            Task::deliver($task);
+        }
     }
 }

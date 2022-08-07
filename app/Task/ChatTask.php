@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\ChatTask;
+namespace App\Task;
 
 use App\Services\ChatService;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
@@ -23,7 +23,7 @@ class ChatTask extends Task
         $this->data = $data;
     }
 
-    public function handle()
+    public function handle(): string
     {
         $pushMsg = ['code' => 0, 'msg' => '', 'data' => []];
         $data = json_decode($this->data, true);
@@ -71,13 +71,8 @@ class ChatTask extends Task
         return "Finished";
     }
 
-    // 可选的，完成事件，任务处理完后的逻辑，运行在Worker进程中，可以投递任务
     public function finish()
     {
-        $data = json_decode($this->data, true);
-        if ($data['task'] == 'new') {
-            Task::deliver(new ServerChanTask($data)); // 投递其他任务
-        }
     }
 
     //群发，广播,给所有人
