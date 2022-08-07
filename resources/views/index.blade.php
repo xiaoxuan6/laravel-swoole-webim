@@ -12,13 +12,6 @@
 </head>
 <body>
 <div id="layout-container">
-    <div id="qrcodeimg">
-        <ul >
-            <li style="margin-bottom: 30px"><img src="{{asset('images/sw.png')}}" alt="swoole群组" style="height: 80px;width: 80px;" title="微信扫码后可收到此群聊的信息"><p>sw群组</p></li>
-            <li style=" margin-bottom: 30px"><img src="{{asset('images/php.png')}}" alt="php群组" style="height: 80px;width: 80px;" title="微信扫码后可收到此群聊的信息"><p>php群组</p></li>
-            <li ><img src="{{asset('images/go.png')}}" alt="go群组" style="height: 80px;width: 80px;" title="微信扫码后可收到此群聊的信息"><p>go群组</p></li>
-        </ul>
-    </div>
     <div id="layout-main">
         <div id="header">
             <div id="login" style="float: right;margin: 17px 15px 4px 0px; display: none">
