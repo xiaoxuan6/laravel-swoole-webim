@@ -19,6 +19,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'http://192.168.10.10:9090/upload_imgs',
+        'upload_imgs',
     ];
 }

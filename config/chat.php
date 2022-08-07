@@ -6,7 +6,7 @@
  * Time: 16:58
  */
 
-define("DOMAIN", sprintf("%S:%S", env('APP_URL', '127.0.0.1'), '9090'));
+define("DOMAIN", 'http://127.0.0.1:10000');
 
 /*房间配置*/
 return [

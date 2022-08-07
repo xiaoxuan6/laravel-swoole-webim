@@ -57,6 +57,9 @@
                                             <i class="iconfont tool-icon tipper-attached emotion_btn" title="表情"></i>
                                             <div class="faceDiv"></div>
                                         </li>
+                                        <li class="tool-item">
+                                            <i class="iconfont tool-icon icon-card tipper-attached" onclick="upload()" title="图片"></i>
+                                        </li>
                                     </ul>
                                     <span class="user-guide">Enter 发送 , Ctrl+Enter 换行</span>
                                     <div class="msg-box" style="height:100%;">

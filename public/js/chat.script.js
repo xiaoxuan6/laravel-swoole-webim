@@ -89,6 +89,8 @@ var chat = {
             "c": 'text',
             "roomid": this.data.crd
         };
+
+        console.log('send', json);
         chat.wsSend(JSON.stringify(json));
         return true;
     },
