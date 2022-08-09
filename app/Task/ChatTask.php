@@ -34,6 +34,11 @@ class ChatTask extends Task
                 app('swoole')->push($data['fd'], json_encode($pushMsg));
 
                 return 'Finished';
+
+            case 'groupChat':
+                $pushMsg = ChatService::groupChat($data);
+
+                break;
             case 'nologin':
                 $pushMsg = ChatService::noLogin($data);
                 app('swoole')->push($data['fd'], json_encode($pushMsg));
@@ -79,14 +84,14 @@ class ChatTask extends Task
     private function sendMsg($swoole, $pushMsg, $myfd)
     {
         echo "当前服务器共有 " . count(app('swoole')->ws_usersTable) . " 个连接\n";
-        foreach (app('swoole')->ws_usersTable as $key => $row) {
+        foreach (app('swoole')->ws_usersTable as $row) {
             if ($row['fd'] === $myfd) {
                 $pushMsg['data']['mine'] = 1;
             } else {
                 $pushMsg['data']['mine'] = 0;
             }
 
-            $swoole->push($row['fd'], json_encode($pushMsg));
+            $swoole->push($row['fd'], json_encode($pushMsg, JSON_UNESCAPED_UNICODE));
         }
     }
 

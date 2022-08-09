@@ -128,6 +128,9 @@ var chat = {
             console.log('ssss', d)
 
             switch (d.code) {
+                case 0:
+                    chat.addGroup(d.data)
+                    break;
                 case 1:
                     if (d.data.mine) {
                         chat.data.fd = d.data.fd;
@@ -147,6 +150,7 @@ var chat = {
                     chat.setWindowNmae(d.data.roomname);
 
                     $('#login').fadeIn();
+                    $('.add-group-chat').fadeIn();
                     break;
                 case 2:
                     if (d.data.mine) {
@@ -525,5 +529,38 @@ var chat = {
     //设置聊天窗口名字
     setWindowNmae: function (name) {
         $('.chat-window-name').text(name);
+    },
+
+    createRoom: function (obj) {
+        $('.modal-backdrop').remove()
+        $('body').removeClass('modal-open')
+        $(obj).parents('#myModal').fadeOut()
+
+        if (!this.data.login) {
+            this.shake();
+            chat.displayError('chatErrorMessage_logout', "未登录用户不能创建群聊～", 1);
+            return false;
+        }
+
+        var message = $.trim($('.message').val())
+        if (message == '') {
+            this.displayError('chatErrorMessage_logout', '群聊名称不能为空～', 1)
+            return;
+        }
+
+        chat.data.type = 5; //创建群聊
+        var json = {"type": chat.data.type, "message": message};
+        chat.wsSend(JSON.stringify(json))
+        return;
+    },
+
+    addGroup: function (data) {
+        chat.data.rds.push(data.roomid);
+        data.selected = '';
+        $('.main-menus').append(cdiv.render('rooms', data));
+
+        var display = 'none';
+        $("#user-lists").append(cdiv.userlists(data.roomid, display));
+        $("#chat-lists").append(cdiv.chatlists(data.roomid, display));
     }
 }

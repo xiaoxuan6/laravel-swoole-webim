@@ -26,6 +26,19 @@ class WebSocket
         Task::deliver(new ChatTask(json_encode($data)));
     }
 
+    public function groupChat($frame)
+    {
+        $data = json_decode($frame->data, true);
+        $params = [
+            'task' => 'groupChat',
+            'fd' => $frame->fd,
+            'room_id' => $data['message'] . date('m'),
+            'room_name' => $data['message']
+        ];
+
+        Task::deliver(new ChatTask(json_encode($params)));
+    }
+
     public function login($frame)
     {
         $data = json_decode($frame->data, true);
@@ -38,7 +51,7 @@ class WebSocket
             'fd' => $frame->fd,
             'roomid' => $data['roomid']
         ];
-        if (! $data['params']['name'] || ! $data['params']['email']) {
+        if (! $params['params']['name'] || ! $params['params']['email']) {
             $params['task'] = "nologin";
         }
 
@@ -108,8 +121,7 @@ class WebSocket
                 ],
                 'fd' => $fd
             ];
-            $task = new ChatTask(json_encode($data));
-            Task::deliver($task);
+            Task::deliver(new ChatTask(json_encode($data)));
         }
     }
 }

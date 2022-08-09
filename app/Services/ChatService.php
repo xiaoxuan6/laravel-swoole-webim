@@ -13,6 +13,8 @@ namespace App\Services;
 
 class ChatService
 {
+    public const GROUP_NAME = 'groups';
+
     public static function noLogin($data): array
     {
         $pushMsg['code'] = 5;
@@ -40,16 +42,44 @@ class ChatService
         return $pushMsg;
     }
 
+    public static function groupChat($data): array
+    {
+        $group = ['roomid' => $data['room_id'], 'roomname' => $data['room_name']];
+        $groups = app('swoole')->ws_groupRoomsTable->get(self::GROUP_NAME);
+        if ($groups) {
+            $groupsArr = json_decode($groups['groups'], true);
+            array_push($groupsArr, $group);
+        } else {
+            $groupsArr = [$group];
+        }
+        app('swoole')->ws_groupRoomsTable->set(self::GROUP_NAME, ['groups' => json_encode($groupsArr, JSON_UNESCAPED_UNICODE)]);
+
+        $pushMsg['code'] = 0;
+        $pushMsg['msg'] = 'success';
+        $pushMsg['data']['roomid'] = $data['room_id'];
+        $pushMsg['data']['roomname'] = $data['room_name'];
+        unset($data);
+        echo '创建群聊' . $pushMsg['data']['roomid'];
+
+        return $pushMsg;
+    }
+
     //获取房间
     public static function getRooms(): array
     {
         $rooms = config('chat.rooms');
         $roomss = [];
-        foreach ($rooms as $_k => $_v) {
+        foreach ($rooms as $k => $v) {
             $roomss[] = [
-                'roomid' => $_k,
-                'roomname' => $_v
+                'roomid' => $k,
+                'roomname' => $v
             ];
+        }
+
+        $groups = app('swoole')->ws_groupRoomsTable->get(self::GROUP_NAME);
+        if ($groups) {
+            $groupsArr = json_decode($groups['groups'], true);
+            $roomss = array_merge($roomss, $groupsArr);
         }
 
         return $roomss;
@@ -114,8 +144,7 @@ class ChatService
     //登出
     public static function doLogout($data): array
     {
-        echo "退出################";
-        var_dump($data);
+        echo "退出################" . PHP_EOL;
         $roomid = $data['params']['roomid'];
 
         //从房间里删除用户
@@ -130,7 +159,6 @@ class ChatService
 
         //从房间用户信息删除
         $infos = app('swoole')->ws_roomUsersTable->get('roomUsersInfo' . $roomid);
-        var_dump($infos);
         if ($infos) {
             $infos = json_decode($infos['infos'], true);
             if (! empty($infos)) {
@@ -145,7 +173,7 @@ class ChatService
                 app('swoole')->ws_roomUsersTable->set('roomUsersInfo' . $roomid, ['infos' => json_encode($infos)]);
             }
         }
-        echo "退出结束################";
+        echo "退出结束################" . PHP_EOL;
 
 
         //删除用户
@@ -268,7 +296,7 @@ class ChatService
         if ($msg != "") {
             $data['msg'] = $msg;
             //正则匹配出所有@的人来
-            $s = preg_match_all('~@(.+?)　~', $msg, $matches) ;
+            $s = preg_match_all('~@(.+?)　~', $msg, $matches);
             $data['flag'] = false;
             if ($s) {
                 $data['flag'] = true;
@@ -289,7 +317,7 @@ class ChatService
                         $i++;
                     }
                 }
-                unset($users, $m1,$m2,$m3);
+                unset($users, $m1, $m2, $m3);
             }
         }
 

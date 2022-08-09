@@ -62,16 +62,25 @@ return [
                 ['name' => 'time', 'type' => \swoole_table::TYPE_STRING, 'size' => 50],
             ]
         ],
+        // 每个房间id关联绑定用户fd
         'ws_rooms' => [
-            'size' => 102400,//Table的最大行数
-            'column' => [// Table的列定义$roomid,$fd,$name,$email,$avatar
+            'size' => 102400,
+            'column' => [
                 ['name' => 'users', 'type' => \swoole_table::TYPE_STRING, 'size' => 1024],
             ]
         ],
+        // 每个房间用户信息
         'ws_roomUsers' => [
-            'size' => 102400,//Table的最大行数
-            'column' => [// Table的列定义$roomid,$fd,$name,$email,$avatar
+            'size' => 102400,
+            'column' => [
                 ['name' => 'infos', 'type' => \swoole_table::TYPE_STRING, 'size' => 1024],
+            ]
+        ],
+        // 群聊名称
+        'ws_groupRooms' => [
+            'size' => 102400,
+            'column' => [
+                ['name' => 'groups', 'type' => swoole_table::TYPE_STRING, 'size' => 1024]
             ]
         ]
     ],

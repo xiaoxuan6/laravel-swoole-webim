@@ -59,8 +59,13 @@ class WebSocketService implements WebSocketHandlerInterface
                 echo $frame->fd . "向" . $data['receive_fd'] . "发起了私聊\n";
 
                 break;
+            case 5: // 创建群聊
+                $this->websocket->groupChat($frame);
+                echo $frame->fd . '创建了群聊' . $data['message'];
+
+                break;
             default:
-                $server->push($frame->fd, json_encode(['code' => 0, 'msg' => 'type error']));
+                $server->push($frame->fd, json_encode(['code' => 0, 'msg' => 'type error', 'data' => $data]));
         }
     }
 
