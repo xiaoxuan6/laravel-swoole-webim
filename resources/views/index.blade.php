@@ -122,7 +122,7 @@
     <div class="wrapper"><img src="{{asset('images/noimg.png')}}"/></div>
 </div>
 <script src="{{asset('js/init.js')}}"></script>
-<script src="{{asset('js/jquery.min.js')}}"></script>
+{{--<script src="{{asset('js/jquery.min.js')}}"></script>--}}
 <script src="{{asset('js/face.js?v=33458')}}"></script>
 <script src="{{asset('js/create.div.js?v=17')}}"></script>
 <script src="{{asset('js/chat.script.js?v=34')}}"></script>

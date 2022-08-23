@@ -56,7 +56,7 @@ class ChatUsersService
      */
     public function save()
     {
-        $userInfo = ['roomid' => $this->roomid,'fd' => $this->fd,'name' => $this->name,'avatar' => $this->avatar,'email' => $this->email,'time' => date("H:i", time())];
+        $userInfo = ['roomid' => $this->roomid, 'fd' => $this->fd, 'name' => $this->name, 'avatar' => $this->avatar, 'email' => $this->email, 'time' => date("H:i", time())];
         //插入到room表，给房间增加一个用户
         $userArr = app('swoole')->ws_roomsTable->get($this->roomid);
         if ($userArr) {
@@ -130,7 +130,7 @@ class ChatUsersService
 
 
         //插入到房间用户信息表
-        $userInfo = ['roomid' => $newroomid,'fd' => $fd,'name' => $this->name,'avatar' => $this->avatar,'email' => $this->email,'time' => date("H:i", time())];
+        $userInfo = ['roomid' => $newroomid, 'fd' => $fd, 'name' => $this->name, 'avatar' => $this->avatar, 'email' => $this->email, 'time' => date("H:i", time())];
 
         $roomUsersArr = app('swoole')->ws_roomUsersTable->get('roomUsersInfo' . $newroomid);
         if ($roomUsersArr) {
@@ -157,7 +157,6 @@ class ChatUsersService
                 app('swoole')->ws_roomUsersTable->set('roomUsersInfo' . $oldroomid, ['infos' => json_encode($infos)]);
             }
         }
-
 
 
         return true;

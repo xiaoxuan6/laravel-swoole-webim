@@ -185,9 +185,9 @@ define("DOMAIN","域名或者刚才设置的ip和端口");
 
 设置推送给群组的server配置
 return [
-    'a'=>'6739-83848e2xxxxdfd5a74b30aca15d71ec5e961', //sw群组
-    'b'=>'6741-7c0b0355xxx85e7e2e86cc6edcdbc7bd',//php群组
-    'c'=>'6740-023ed322xxxxfds9c6e3d0e4b268a762622a'//go群组
+    'a'=>'xxxx', //sw群组
+    'b'=>'xxxx',//php群组
+    'c'=>'xxxx'//go群组
 ];
 ```
 
@@ -197,8 +197,8 @@ return [
 配置public目录下的init.js
 ```bash
 var config = {
-	'domain' : "http://192.168.10.10:9090",//你的ip和端口，也就是laravel-s上设置的
-	'wsserver' : "ws://192.168.10.10:9090",//除了协议不同，其他ip跟端口是一致的
+	'domain' : "http://127.0.0.1:9090",//你的ip和端口，也就是laravel-s上设置的
+	'wsserver' : "ws://127.0.0.1:9090",//除了协议不同，其他ip跟端口是一致的
 }
 ```
 
